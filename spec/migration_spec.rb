@@ -231,7 +231,7 @@ describe ActiveRecord::Migration do
     end
   end
 
-  context "when table is renamed", :sqlite3 => :skip do
+  context "when table is renamed", :postgresql => :only do
 
     before(:each) do
       @model = Comment
