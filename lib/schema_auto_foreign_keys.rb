@@ -1,7 +1,6 @@
 require 'schema_plus/foreign_keys'
 require 'schema_plus/indexes'
 
-require_relative 'schema_auto_foreign_keys/active_record/migration/command_recorder'
 require_relative 'schema_auto_foreign_keys/middleware/migration'
 require_relative 'schema_auto_foreign_keys/middleware/schema'
 
