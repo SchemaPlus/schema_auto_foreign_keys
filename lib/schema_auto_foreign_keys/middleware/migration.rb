@@ -1,3 +1,5 @@
+require 'openssl'
+
 module SchemaAutoForeignKeys
   module AutoCreate
     # defined below
@@ -75,8 +77,9 @@ module SchemaAutoForeignKeys
     end
 
     def self.auto_index_name(from_table, column_name)
-      "fk__#{fixup_schema_name(from_table)}_#{Array.wrap(column_name).join('_and_')}"
-      # this should enforce a maximum length
+      name = "fk__#{fixup_schema_name(from_table)}_#{Array.wrap(column_name).join('_and_')}"
+      name = name.slice(0, 27) + "_" + OpenSSL::Digest::MD5.new.hexdigest(name) if name.length > 60
+      name
     end
 
     def self.fixup_schema_name(table_name)

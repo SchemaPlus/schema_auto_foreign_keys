@@ -52,6 +52,7 @@ describe ActiveRecord::Migration do
         t.integer :author_id, :foreign_key => { :references => :users }
       end
       expect(@model).to reference(:users, :id).on(:author_id)
+      expect(@model).to have_index.on(:author_id)
     end
 
     it "suppresses auto foreign key" do
@@ -59,6 +60,7 @@ describe ActiveRecord::Migration do
         t.integer :member_id, :foreign_key => false
       end
       expect(@model).not_to reference.on(:member_id)
+      expect(@model).not_to have_index.on(:member_id)
     end
 
     it "suppresses auto foreign key using shortcut" do
@@ -66,6 +68,7 @@ describe ActiveRecord::Migration do
         t.integer :member_id, :references => nil
       end
       expect(@model).not_to reference.on(:member_id)
+      expect(@model).not_to have_index.on(:member_id)
     end
 
     [:references, :belongs_to].each do |reftype|
@@ -131,6 +134,17 @@ describe ActiveRecord::Migration do
       expect(@model).to have_index.on(:user_id)
       expect(@model).not_to have_index.on(:application_id)
       expect(@model).not_to have_index.on(:state)
+    end
+
+    it "handles very long index names" do
+      table = ("ta"*15 + "_id")
+      column = ("co"*15 + "_id")
+      expect {
+        ActiveRecord::Migration.create_table table do |t|
+          t.integer column, foreign_key: { references: :members, name: "verylong" }
+        end
+      }.not_to raise_error
+      expect(ActiveRecord::Base.connection.indexes(table).first.columns.first).to eq column
     end
 
     it "overrides foreign key auto_create positively" do
