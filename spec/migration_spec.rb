@@ -160,7 +160,7 @@ describe ActiveRecord::Migration do
       end
     end
 
-    it "overrides foreign key auto_index negatively" do
+    it "overrides foreign key auto_index negatively", :mysql => :skip do
       with_fk_config(:auto_index => true) do
         create_table @model, :foreign_keys => {:auto_index => false} do |t|
           t.integer :user_id
@@ -266,7 +266,7 @@ describe ActiveRecord::Migration do
     end
 
     # MySQL creates an index on foreign key and we can't override that
-    it "doesn't create auto-index if declined explicitly" do
+    it "doesn't create auto-index if declined explicitly", :mysql => :skip do
       add_column(:post_id, :integer, :index => false) do
         expect(@model).not_to have_index.on(:post_id)
       end
@@ -308,7 +308,7 @@ describe ActiveRecord::Migration do
           expect(@model).not_to reference(:users)
         end
 
-        it "should remove auto-created index if foreign key is removed" do
+        it "should remove auto-created index if foreign key is removed", :mysql => :skip do
           expect(@model).to have_index.on(:user_id)  # sanity check that index was auto-created
           change_column :user_id, :integer, :foreign_key => { :references => nil }
           expect(@model).not_to have_index.on(:user_id)
