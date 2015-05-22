@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = SchemaAutoForeignKeys::VERSION
   gem.authors       = ["ronen barzel"]
   gem.email         = ["ronen@barzel.org"]
-  gem.summary       = %q{TODO: Write a short summary. Required.}
-  gem.description   = %q{TODO: Write a longer description. Optional.}
+  gem.summary       = %q{Automatically define foreign key constraints in ActiveRecord}
+  gem.description   = %q{In an ActiveRecord migration, set the default to create a foreign key and index for all columns that define relatoins.}
   gem.homepage      = "https://github.com/SchemaPlus/schema_auto_foreign_keys"
   gem.license       = "MIT"
 

@@ -5,9 +5,69 @@
 
 # SchemaAutoForeignKeys
 
-TODO: Write a gem description
 
 SchemaAutoForeignKeys is part of the [SchemaPlus](https://github.com/SchemaPlus/) family of Ruby on Rails ActiveRecord extension gems.
+
+## Usage
+
+Many of us think that it should goes without saying that if you define a foreign key *relation* in your database you should also define a foreign key *constraint*.
+
+Similarly, it should go without saying that if you have a foreign key *constraint* on a column, you should also have an *index* on that column.
+
+And if you include the `schema_auto_foreign_keys` gem, these will also go without typing!  schema_auto_foreign_keys simply turns on some default behavior in your migrations:
+
+```ruby
+t.integer :user_id  # any column named xxxx_id defaults to...
+t.integer :user_id, foreign_key: true, index: true
+
+t.references :user # references defaults to...
+t.references :user, foreign_key: true, index: true
+
+t.belongs_to :user # belongs_to default to...
+t.belongs_to :user, foreign_key: true, index: true
+```
+
+Note that schema_auto_foreign_keys depends on the [schema_plus_foreign_keys](https://github.com/SchemaPlus/schema_plus_foreign_keys) and [schema_plus_indexes](https://github.com/SchemaPlus/schema_plus_indexes) gems, and so makes available their migration shortcuts.
+
+There is actually one difference between an auto-created index and specifying `index: true`: if you don't specify anything, schema_auto_foreign_keys will maintain "ownership" of the auto-created index:  It will remove the index if the foreign key gets removed; and it will rename the index if the table gets renamed.
+
+### Overriding
+
+If you need specific paramaters other than the default, you can of course specify them:
+
+```ruby
+t.integer :user_id, index: :unique  # "has one" relationship between users and this 
+model
+t.integer :user_id, on_delete: :cascade
+```
+
+If you don't want a foreign key constraint (e.g. because "product_id" is a domain-level string rather than a foreign key), or an index just specify falsey:
+
+```rugy
+t.integer :product_id, foreign_key: false # also implies index: false
+t.integer :product_id, references: nil
+t.integer :user_id, index: false
+```
+
+## Configuration
+
+SchemaAutoForeignKeys adds two new entries to SchemaPlus::ForeignKeys' config:
+
+```ruby
+SchemaPlus::ForeignKeys.setup do |config|
+   config.auto_create = true # default for schema_auto_foreign_keys
+   config.auto_index = true # default for schema_auto_foreign_keys
+end
+```
+
+You can also configure the behavior per-table in a migration:
+
+```ruby
+create_table :posts, foreign_keys: { auto_create: true, auto_index: true } do |t|
+   t.integer :author_id
+endf
+```
+
 
 ## Installation
 
@@ -33,13 +93,17 @@ SchemaAutoForeignKeys is tested on:
 
 <!-- SCHEMA_DEV: MATRIX - end -->
 
-## Usage
+### Platform-specific Notes:
 
-TODO: Write usage instructions here
+MySQL automatically creates indexes for foreign key constraints, so when used with MySQL, schema_auto_foreign_keys doesn't include the auto-index capability.
+
+SQlite3 doesn't support renaming the auto-index whtn the table name changes.
+
+
 
 ## History
 
-* 0.1.0 - Initial release
+* 0.1.0 - Initial release, extracted from schema_plus 2.0.0.pre*
 
 ## Development & Testing
 
@@ -69,16 +133,6 @@ Some things to know about to help you develop and test:
 
 <!-- SCHEMA_DEV: TEMPLATE USES SCHEMA_DEV - end -->
 
-<!-- SCHEMA_DEV: TEMPLATE USES SCHEMA_PLUS_CORE - begin -->
-<!-- These lines are auto-inserted from a schema_dev template -->
-* **schema_plus_core**: SchemaAutoForeignKeys uses the SchemaPlus::Core API that
-  provides middleware callback stacks to make it easy to extend
-  ActiveRecord's behavior.  If that API is missing something you need for
-  your contribution, please head over to
-  [schema_plus_core](https://github.com/SchemaPlus/schema_plus_core) and open
-  an issue or pull request.
-
-<!-- SCHEMA_DEV: TEMPLATE USES SCHEMA_PLUS_CORE - end -->
 
 <!-- SCHEMA_DEV: TEMPLATE USES SCHEMA_MONKEY - begin -->
 <!-- These lines are auto-inserted from a schema_dev template -->
