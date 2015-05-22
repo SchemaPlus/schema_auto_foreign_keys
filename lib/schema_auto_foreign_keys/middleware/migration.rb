@@ -14,6 +14,18 @@ module SchemaAutoForeignKeys
           def remove_auto_index?(env) ; false end
         end
       end
+
+      module RenameTable
+        def after(env)
+          newname = env.new_name
+          oldname = env.table_name
+          indexes = env.connection.indexes(newname)
+          env.connection.foreign_keys(newname).each do |fk|
+            index = indexes.find(&its.name == AutoCreate.auto_index_name(oldname, fk.column))
+            env.connection.rename_index(newname, index.name, AutoCreate.auto_index_name(newname, index.columns)) if index
+          end
+        end
+      end
     end
   end
   

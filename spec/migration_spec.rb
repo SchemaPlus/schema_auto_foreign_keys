@@ -217,6 +217,24 @@ describe ActiveRecord::Migration do
     end
   end
 
+  context "when table is renamed", :sqlite3 => :skip do
+
+    before(:each) do
+      @model = Comment
+      create_table @model do |t|
+        t.integer :user_id
+        t.integer :xyz, :index => true
+      end
+      ActiveRecord::Migration.rename_table @model.table_name, :newname
+    end
+
+    it "should rename fk indexes" do
+      index = ActiveRecord::Base.connection.indexes(:newname).find(&its.columns == ['user_id'])
+      expect(index.name).to match(/^fk__newname_/)
+    end
+
+  end
+
   context "when column is added", :sqlite3 => :skip do
 
     before(:each) do
