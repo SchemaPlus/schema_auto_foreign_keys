@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "schema_plus_foreign_keys", "~> 0.1"
   gem.add_dependency "schema_plus_indexes", "~> 0.2"
+  gem.add_dependency "its-it", "~> 1.2"
 
   gem.add_development_dependency "bundler", "~> 1.7"
   gem.add_development_dependency "rake", "~> 10.0"
