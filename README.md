@@ -103,6 +103,7 @@ SQlite3 doesn't support renaming the auto-index whtn the table name changes.
 
 ## History
 
+* 0.1.2 - Missing require
 * 0.1.1 - Explicit gem dependencies
 * 0.1.0 - Initial release, extracted from schema_plus 2.0.0.pre*
 
