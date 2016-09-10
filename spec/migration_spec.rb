@@ -215,7 +215,7 @@ describe ActiveRecord::Migration do
           end
           expect(Comment).to reference(:users, :id).on(:user_id)
           expect(Comment).to have_index.on(:user_id)
-          migration = Class.new ::ActiveRecord::Migration do
+          migration = Class.new ::ActiveRecord::Migration.latest_version do
             define_method(:change) {
               change_table("comments", :bulk => bulk) do |t|
                 t.integer :user_id
