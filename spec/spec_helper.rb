@@ -42,7 +42,7 @@ end
 
 def define_schema(&block)
   ActiveRecord::Schema.define do
-    connection.tables.each do |table|
+    connection.tables_only.each do |table|
       drop_table table, force: :cascade
     end
     instance_eval &block
