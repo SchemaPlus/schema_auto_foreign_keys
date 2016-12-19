@@ -28,6 +28,9 @@ describe ActiveRecord::Migration do
     class User < ::ActiveRecord::Base ; end
     class Post < ::ActiveRecord::Base ; end
     class Comment < ::ActiveRecord::Base ; end
+    User.reset_column_information
+    Post.reset_column_information
+    Comment.reset_column_information
   end
 
   around(:each) do |example|
