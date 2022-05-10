@@ -1,6 +1,5 @@
 require 'simplecov'
-require 'simplecov-gem-profile'
-SimpleCov.start "gem"
+SimpleCov.start
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
@@ -37,7 +36,7 @@ def with_fk_config(opts={}, &block)
 end
 
 def with_fk_auto_create(value = true, &block)
-  with_fk_config(:auto_create => value, &block)
+  with_fk_config(auto_create: value, &block)
 end
 
 def define_schema(&block)

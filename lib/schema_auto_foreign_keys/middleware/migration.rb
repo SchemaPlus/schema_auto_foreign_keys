@@ -30,7 +30,7 @@ module SchemaAutoForeignKeys
       end
     end
   end
-  
+
   module AutoCreate
     def before(env)
       config ||= env.caller.try(:schema_plus_foreign_keys_config) || SchemaPlus::ForeignKeys.config
@@ -69,7 +69,7 @@ module SchemaAutoForeignKeys
     end
 
     def remove_auto_index(env)
-      env.caller.remove_index(env.table_name, :name => auto_index_name(env), :column => env.column_name, :if_exists => true)
+      env.caller.remove_index(env.table_name, name: auto_index_name(env), column: env.column_name, if_exists: true)
     end
 
     def auto_index_name(env)

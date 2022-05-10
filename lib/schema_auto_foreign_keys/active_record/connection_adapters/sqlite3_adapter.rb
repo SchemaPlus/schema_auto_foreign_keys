@@ -7,7 +7,7 @@ module SchemaAutoForeignKeys
       module Sqlite3Adapter
 
         def copy_table(*args, &block)
-          fk_override = { :auto_create => false, :auto_index => false }
+          fk_override = { auto_create: false, auto_index: false }
           save = Hash[fk_override.keys.collect{|key| [key, SchemaPlus::ForeignKeys.config.send(key)]}]
           begin
             SchemaPlus::ForeignKeys.config.update_attributes(fk_override)

@@ -10,19 +10,19 @@ describe ActiveRecord::Schema do
       with_fk_config(auto_create: true, auto_index: true) do
         ActiveRecord::Schema.define do
 
-          create_table :users, :force => :cascade do
+          create_table :users, force: :cascade do
           end
 
-          create_table :colors, :force => :cascade do
+          create_table :colors, force: :cascade do
           end
 
-          create_table :shoes, :force => :cascade do
+          create_table :shoes, force: :cascade do
           end
 
-          create_table :posts, :force => true do |t|
-            t.integer :user_id, :references => :users, :index => true
-            t.integer :shoe_id, :references => :shoes   # should not have an index (except mysql)
-            t.integer :color_id   # should not have a foreign key nor index
+          create_table :posts, force: true do |t|
+            t.bigint :user_id, references: :users, index: true
+            t.bigint :shoe_id, references: :shoes   # should not have an index (except mysql)
+            t.bigint :color_id   # should not have a foreign key nor index
           end
         end
       end
