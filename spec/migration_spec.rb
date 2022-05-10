@@ -248,7 +248,7 @@ describe ActiveRecord::Migration do
     end
 
     it "should rename fk indexes" do
-      index = ActiveRecord::Base.connection.indexes(:newname).find(&its.columns == ['user_id'])
+      index = ActiveRecord::Base.connection.indexes(:newname).find { |it| it.columns == ['user_id'] }
       expect(index.name).to match(/^fk__newname_/)
     end
 

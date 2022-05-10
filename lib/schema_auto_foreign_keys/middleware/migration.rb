@@ -23,7 +23,7 @@ module SchemaAutoForeignKeys
           oldname = env.table_name
           indexes = env.connection.indexes(newname)
           env.connection.foreign_keys(newname).each do |fk|
-            index = indexes.find(&its.name == AutoCreate.auto_index_name(oldname, fk.column))
+            index = indexes.find { |it| it.name == AutoCreate.auto_index_name(oldname, fk.column) }
             env.connection.rename_index(newname, index.name, AutoCreate.auto_index_name(newname, index.columns)) if index
           end
         end

@@ -1,6 +1,5 @@
 require 'schema_plus/foreign_keys'
 require 'schema_plus/indexes'
-require 'its-it'
 
 require_relative 'schema_auto_foreign_keys/middleware/migration'
 require_relative 'schema_auto_foreign_keys/middleware/schema'
