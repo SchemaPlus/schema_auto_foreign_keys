@@ -1,6 +1,6 @@
 [![Gem Version](https://badge.fury.io/rb/schema_auto_foreign_keys.svg)](http://badge.fury.io/rb/schema_auto_foreign_keys)
-[![Build Status](https://secure.travis-ci.org/SchemaPlus/schema_auto_foreign_keys.svg)](http://travis-ci.org/SchemaPlus/schema_auto_foreign_keys)
-[![Coverage Status](https://img.shields.io/coveralls/SchemaPlus/schema_auto_foreign_keys.svg)](https://coveralls.io/r/SchemaPlus/schema_auto_foreign_keys)
+[![Build Status](https://github.com/SchemaPlus/schema_auto_foreign_keys/actions/workflows/prs.yml/badge.svg)](https://github.com/SchemaPlus/schema_auto_foreign_keys/actions)
+[![Coverage Status](https://coveralls.io/repos/github/SchemaPlus/schema_auto_foreign_keys/badge.svg?branch=master)](https://coveralls.io/github/SchemaPlus/schema_auto_foreign_keys?branch=master)
 
 # SchemaAutoForeignKeys
 
@@ -35,7 +35,7 @@ There is actually one difference between an auto-created index and specifying `i
 If you need specific paramaters other than the default, you can of course specify them:
 
 ```ruby
-t.integer :user_id, index: :unique  # "has one" relationship between users and this 
+t.integer :user_id, index: :unique  # "has one" relationship between users and this
 model
 t.integer :user_id, on_delete: :cascade
 ```
@@ -105,6 +105,7 @@ SQlite3 doesn't support renaming the auto-index whtn the table name changes.
 
 ## History
 
+* 1.0.0 - Drop Ruby < 2.5 and Rails < 5.2, add Rails 6.0, and remove many deprecations
 * 0.1.3 - AR5 (Rails 5) Support
 * 0.1.2 - Missing require
 * 0.1.1 - Explicit gem dependencies
