@@ -30,11 +30,11 @@ describe ActiveRecord::Schema do
 
     it "creates only explicity added indexes" do
       expected = SchemaDev::Rspec::Helpers.mysql? ? 2 : 1
-      expect(connection.user_tables_only.collect { |table| connection.indexes(table) }.flatten.size).to eq(expected)
+      expect(connection.tables.collect { |table| connection.indexes(table) }.flatten.size).to eq(expected)
     end
 
     it "should create only explicity added foriegn keys" do
-      expect(connection.user_tables_only.collect { |table| connection.foreign_keys(table) }.flatten.size).to eq(2)
+      expect(connection.tables.collect { |table| connection.foreign_keys(table) }.flatten.size).to eq(2)
     end
 
   end
