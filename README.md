@@ -113,6 +113,7 @@ SQlite3 doesn't support renaming the auto-index whtn the table name changes.
 
 ## History
 
+* 1.1.0 - Add AR 6.1 and 7.0, Add Ruby 3.1.  remvoe schema_plus_compatiblity dependency
 * 1.0.0 - Drop Ruby < 2.5 and Rails < 5.2, add Rails 6.0, and remove many deprecations
 * 0.1.3 - AR5 (Rails 5) Support
 * 0.1.2 - Missing require
